@@ -1,0 +1,87 @@
+{
+  "name": "skills.journal",
+  "description": "Trade journal recording, statistics calculation, and performance analysis.",
+  "category": "journal",
+  "version": "1.0.0",
+  "modules": [
+    {
+      "name": "skills.journal.save_trade",
+      "description": "Save trade entry and exit"
+    },
+    {
+      "name": "skills.journal.trade_statistics",
+      "description": "Calculate trade statistics and metrics"
+    },
+    {
+      "name": "skills.journal.export_journal",
+      "description": "Export journal for analysis"
+    }
+  ],
+  "inputs": [
+    {
+      "name": "action",
+      "data_type": "str",
+      "required": true,
+      "description": "entry or exit"
+    },
+    {
+      "name": "trade_id",
+      "data_type": "str",
+      "required": true,
+      "description": "Unique trade identifier"
+    },
+    {
+      "name": "symbol",
+      "data_type": "str",
+      "required": true,
+      "description": "Trading pair"
+    },
+    {
+      "name": "side",
+      "data_type": "str",
+      "required": true,
+      "description": "BUY or SELL"
+    },
+    {
+      "name": "entry_price",
+      "data_type": "float",
+      "required": true,
+      "description": "Entry price"
+    },
+    {
+      "name": "volume",
+      "data_type": "float",
+      "required": true,
+      "description": "Position size"
+    },
+    {
+      "name": "result",
+      "data_type": "str",
+      "required": false,
+      "description": "win, loss, or breakeven (for exit)"
+    },
+    {
+      "name": "pnl",
+      "data_type": "float",
+      "required": false,
+      "description": "Profit/loss amount (for exit)"
+    }
+  ],
+  "outputs": [
+    {
+      "name": "success",
+      "data_type": "bool",
+      "description": "Recording success"
+    },
+    {
+      "name": "journal_entry_id",
+      "data_type": "str",
+      "description": "Journal entry UUID"
+    },
+    {
+      "name": "statistics",
+      "data_type": "Dict[str, float]",
+      "description": "Updated trading statistics"
+    }
+  ]
+}

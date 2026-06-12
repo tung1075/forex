@@ -1,0 +1,68 @@
+{
+  "name": "skills.market_analysis",
+  "description": "Comprehensive market analysis including trend, momentum, volatility, and price levels.",
+  "category": "market_analysis",
+  "version": "1.0.0",
+  "modules": [
+    {
+      "name": "skills.market_analysis.trend",
+      "description": "Trend detection and analysis"
+    },
+    {
+      "name": "skills.market_analysis.support_resistance",
+      "description": "Support and resistance level identification"
+    },
+    {
+      "name": "skills.market_analysis.liquidity",
+      "description": "Liquidity and spread analysis"
+    }
+  ],
+  "inputs": [
+    {
+      "name": "symbol",
+      "data_type": "str",
+      "required": true,
+      "description": "Trading pair (e.g., EURUSD)"
+    },
+    {
+      "name": "prices",
+      "data_type": "Dict[str, List[float]]",
+      "required": true,
+      "description": "OHLC price data"
+    },
+    {
+      "name": "volume",
+      "data_type": "List[float]",
+      "required": true,
+      "description": "Volume data"
+    },
+    {
+      "name": "timeframe",
+      "data_type": "str",
+      "required": true,
+      "description": "Timeframe (M1, M5, H1, etc.)"
+    }
+  ],
+  "outputs": [
+    {
+      "name": "decision",
+      "data_type": "str",
+      "description": "Signal: buy, sell, hold, unknown"
+    },
+    {
+      "name": "confidence",
+      "data_type": "float",
+      "description": "Confidence level 0.0-1.0"
+    },
+    {
+      "name": "evidence",
+      "data_type": "Dict[str, Any]",
+      "description": "Supporting evidence and details"
+    },
+    {
+      "name": "metadata",
+      "data_type": "Dict[str, Any]",
+      "description": "Metadata for tracking and debugging"
+    }
+  ]
+}

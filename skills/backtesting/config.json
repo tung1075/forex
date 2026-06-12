@@ -1,0 +1,80 @@
+{
+  "name": "skills.backtesting",
+  "description": "Historical backtesting and performance analysis for strategy validation.",
+  "category": "backtesting",
+  "version": "1.0.0",
+  "modules": [
+    {
+      "name": "skills.backtesting.run_backtest",
+      "description": "Execute strategy backtest on historical data"
+    },
+    {
+      "name": "skills.backtesting.metrics",
+      "description": "Calculate performance metrics"
+    },
+    {
+      "name": "skills.backtesting.equity_curve",
+      "description": "Generate equity curve and drawdown analysis"
+    }
+  ],
+  "inputs": [
+    {
+      "name": "strategy",
+      "data_type": "dict",
+      "required": true,
+      "description": "Strategy parameters and rules"
+    },
+    {
+      "name": "symbol",
+      "data_type": "str",
+      "required": true,
+      "description": "Trading pair"
+    },
+    {
+      "name": "start_date",
+      "data_type": "str",
+      "required": true,
+      "description": "Backtest start date (YYYY-MM-DD)"
+    },
+    {
+      "name": "end_date",
+      "data_type": "str",
+      "required": true,
+      "description": "Backtest end date (YYYY-MM-DD)"
+    },
+    {
+      "name": "initial_balance",
+      "data_type": "float",
+      "required": true,
+      "description": "Starting account balance"
+    },
+    {
+      "name": "lot_size",
+      "data_type": "float",
+      "required": true,
+      "description": "Fixed lot size per trade"
+    }
+  ],
+  "outputs": [
+    {
+      "name": "success",
+      "data_type": "bool",
+      "description": "Backtest execution success"
+    },
+    {
+      "name": "summary",
+      "data_type": "Dict[str, float]",
+      "description": "Performance summary metrics"
+    },
+    {
+      "name": "equity_curve",
+      "data_type": "List[Dict]",
+      "description": "Time series of account equity"
+    },
+    {
+      "name": "weak_periods",
+      "data_type": "List[Dict]",
+      "description": "Periods where strategy underperformed"
+    }
+  ]
+}

@@ -1,0 +1,86 @@
+{
+  "name": "skills.execution",
+  "description": "Trade execution including order placement, modification, and closure.",
+  "category": "execution",
+  "version": "1.0.0",
+  "modules": [
+    {
+      "name": "skills.execution.open_order",
+      "description": "Open new trade orders"
+    },
+    {
+      "name": "skills.execution.modify_order",
+      "description": "Modify existing orders"
+    },
+    {
+      "name": "skills.execution.close_order",
+      "description": "Close open positions"
+    }
+  ],
+  "inputs": [
+    {
+      "name": "action",
+      "data_type": "str",
+      "required": true,
+      "description": "Action: open, modify, close"
+    },
+    {
+      "name": "symbol",
+      "data_type": "str",
+      "required": true,
+      "description": "Trading pair"
+    },
+    {
+      "name": "side",
+      "data_type": "str",
+      "required": true,
+      "description": "BUY or SELL"
+    },
+    {
+      "name": "volume",
+      "data_type": "float",
+      "required": true,
+      "description": "Position size in lots"
+    },
+    {
+      "name": "entry_price",
+      "data_type": "float",
+      "required": true,
+      "description": "Entry price level"
+    },
+    {
+      "name": "stop_loss",
+      "data_type": "float",
+      "required": true,
+      "description": "Stop loss price level"
+    },
+    {
+      "name": "take_profit",
+      "data_type": "float",
+      "required": true,
+      "description": "Take profit price level"
+    }
+  ],
+  "outputs": [
+    {
+      "name": "success",
+      "data_type": "bool",
+      "description": "Execution success status"
+    },
+    {
+      "name": "order_id",
+      "data_type": "str",
+      "description": "Broker order ID"
+    },
+    {
+      "name": "status",
+      "data_type": "str",
+      "description": "Order status: filled, rejected, cancelled, etc."
+    },
+    {
+      "name": "error",
+      "data_type": "str|null",
+      "description": "Error message if failed"
+    }
+  ]
+}

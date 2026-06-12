@@ -1,0 +1,86 @@
+{
+  "name": "skills.risk_management",
+  "description": "Risk management including position sizing, stop loss, and exposure control.",
+  "category": "risk_management",
+  "version": "1.0.0",
+  "modules": [
+    {
+      "name": "skills.risk_management.position_size",
+      "description": "Position sizing calculation"
+    },
+    {
+      "name": "skills.risk_management.stop_loss",
+      "description": "Stop loss level determination"
+    },
+    {
+      "name": "skills.risk_management.risk_guard",
+      "description": "Risk guard and exposure control"
+    }
+  ],
+  "inputs": [
+    {
+      "name": "account_balance",
+      "data_type": "float",
+      "required": true,
+      "description": "Account balance in base currency"
+    },
+    {
+      "name": "account_equity",
+      "data_type": "float",
+      "required": true,
+      "description": "Current account equity"
+    },
+    {
+      "name": "entry_price",
+      "data_type": "float",
+      "required": true,
+      "description": "Proposed entry price"
+    },
+    {
+      "name": "stop_price",
+      "data_type": "float",
+      "required": true,
+      "description": "Stop loss price"
+    },
+    {
+      "name": "profit_target",
+      "data_type": "float",
+      "required": true,
+      "description": "Profit target price"
+    },
+    {
+      "name": "daily_loss_limit",
+      "data_type": "float",
+      "required": true,
+      "description": "Daily loss limit in base currency"
+    },
+    {
+      "name": "daily_loss_to_date",
+      "data_type": "float",
+      "required": true,
+      "description": "Current daily loss amount"
+    }
+  ],
+  "outputs": [
+    {
+      "name": "allowed",
+      "data_type": "bool",
+      "description": "Whether trade is allowed under risk limits"
+    },
+    {
+      "name": "position_size",
+      "data_type": "float",
+      "description": "Calculated position size"
+    },
+    {
+      "name": "risk_reward_ratio",
+      "data_type": "float",
+      "description": "Risk to reward ratio"
+    },
+    {
+      "name": "message",
+      "data_type": "str",
+      "description": "Explanation of decision"
+    }
+  ]
+}
