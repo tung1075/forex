@@ -10,7 +10,7 @@ class MockMarketDataAgent:
         self.spread = spread
 
     def fetch_tick(self, symbol: str) -> MarketTick:
-        tick = generate_tick(symbol=symbol, current_price=self.price, spread=self.spread)
+        tick = generate_tick(symbol=symbol, start_price=self.price, spread=self.spread)
         self.price = tick.mid
         return tick
 

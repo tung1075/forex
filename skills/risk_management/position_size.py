@@ -57,7 +57,7 @@ METADATA = SkillMetadata(
             required=False,
         )
     ],
-    dependencies=["skills.risk_management.position_size"],
+    dependencies=[],
     examples=[
         {
             "input": {"account_balance": 10000.0, "risk_per_trade": 0.01, "stop_distance": 0.02, "price": 1.25},

@@ -89,3 +89,25 @@ def recent_short_term_memory(limit: int = 10):
 def query_market_insight_endpoint(payload: MemoryQueryRequest):
     results = memory_agent.query_market_insight(payload.query, payload.tags)
     return {"market_insights": [record.to_dict() for record in results]}
+
+
+class EvidenceRequest(BaseModel):
+    content: dict[str, Any] = Field(default_factory=dict)
+    tags: list[str] = Field(default_factory=list)
+
+
+class FailureRequest(BaseModel):
+    content: dict[str, Any] = Field(default_factory=dict)
+    tags: list[str] = Field(default_factory=list)
+
+
+@router.post("/evidence")
+def save_evidence_endpoint(payload: EvidenceRequest):
+    saved = memory_agent.save_evidence(payload.content, payload.tags)
+    return {"saved_memory": saved.to_dict()}
+
+
+@router.post("/failure")
+def save_failure_endpoint(payload: FailureRequest):
+    saved = memory_agent.save_failure(payload.content, payload.tags)
+    return {"saved_memory": saved.to_dict()}

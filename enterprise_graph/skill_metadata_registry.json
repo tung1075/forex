@@ -779,7 +779,7 @@
     ],
     "outputs": [
       {
-        "name": "TrendResult",
+        "name": "trend_result",
         "description": "Trend direction and confidence score.",
         "data_type": "TrendResult",
         "required": true,
@@ -856,9 +856,7 @@
         "example": null
       }
     ],
-    "dependencies": [
-      "skills.risk_management.position_size"
-    ],
+    "dependencies": [],
     "examples": [
       {
         "input": {
@@ -1236,11 +1234,16 @@
     ],
     "outputs": [
       {
-        "name": "List[float]",
+        "name": "ema_values",
         "description": "Calculated EMA values.",
         "data_type": "List[float]",
         "required": true,
-        "example": null
+        "example": [
+          1.0,
+          1.01,
+          1.02,
+          1.03
+        ]
       },
       {
         "name": "signal",
@@ -1250,9 +1253,7 @@
         "example": "buy"
       }
     ],
-    "dependencies": [
-      "skills.signal_engine.ema_cross"
-    ],
+    "dependencies": [],
     "examples": [
       {
         "input": {

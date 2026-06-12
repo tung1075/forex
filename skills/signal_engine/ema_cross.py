@@ -50,10 +50,11 @@ METADATA = SkillMetadata(
     ],
     outputs=[
         SkillIO(
-            name="List[float]",
+            name="ema_values",
             description="Calculated EMA values.",
             data_type="List[float]",
             required=True,
+            example=[1.0, 1.01, 1.02, 1.03],
         ),
         SkillIO(
             name="signal",
@@ -63,7 +64,7 @@ METADATA = SkillMetadata(
             example="buy",
         ),
     ],
-    dependencies=["skills.signal_engine.ema_cross"],
+    dependencies=[],
     examples=[
         {
             "input": {"prices": [1.0, 1.01, 1.02, 1.03], "period": 3},

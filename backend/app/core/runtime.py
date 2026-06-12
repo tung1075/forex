@@ -12,7 +12,7 @@ from app.market.mock_market import MockMarketDataAgent
 from app.optimization.gene_search import BacktestOptimizationAgent
 from app.strategy.hedge_engine import HedgeEngine
 from governance.governance_manager import GovernanceManager
-from hooks.hook_manager import HookManager
+from evolution.manager import EvolutionManager
 from memory.memory_manager import MemoryManager
 from skills.shared.memory import list_winner_genes, promote_gene, remember_gene
 from identity.identity_manager import IdentityManager
@@ -46,7 +46,7 @@ optimizer = BacktestOptimizationAgent()
 genes_memory = WinnerGenesMemoryAgent(gene_store)
 memory_agent = MemoryManager(settings.memory_path)
 governance_agent = GovernanceManager()
-evolution_agent = HookManager()
+evolution_agent = EvolutionManager(memory_path=settings.memory_path)
 identity_agent = IdentityManager()
 enterprise_graph_agent = EnterpriseGraphManager()
 

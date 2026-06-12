@@ -33,7 +33,7 @@ class MemoryManager:
     def _write_store(self, records: list[MemoryRecord]) -> None:
         store_path = Path(self.path)
         store_path.parent.mkdir(parents=True, exist_ok=True)
-        store_path.write_text(json.dumps([record.to_dict() for record in records], indent=2), encoding="utf-8")
+        store_path.write_text(json.dumps([record.to_dict() for record in records], indent=2, default=str), encoding="utf-8")
 
     def _record(self, content: dict[str, Any], memory_type: MemoryType, tags: list[str] | None = None) -> MemoryRecord:
         return MemoryRecord(
@@ -64,6 +64,16 @@ class MemoryManager:
             memory_type=MemoryType.LONG_TERM,
             tags=(tags or ["failure"]),
         )
+
+    def save_evidence(self, content: dict[str, Any], tags: list[str] | None = None) -> MemoryRecord:
+        return self.remember(
+            {"kind": "evidence", "content": content},
+            memory_type=MemoryType.LONG_TERM,
+            tags=(tags or ["evidence"]),
+        )
+
+    def query_evidence(self, query_value: str, tags: list[str] | None = None) -> list[MemoryRecord]:
+        return self.query(query_value, tags=(tags or ["evidence"]), memory_type=MemoryType.LONG_TERM)
 
     def save_strategy(self, content: dict[str, Any], tags: list[str] | None = None) -> MemoryRecord:
         return self.remember(

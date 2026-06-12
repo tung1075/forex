@@ -50,7 +50,7 @@ METADATA = SkillMetadata(
     ],
     outputs=[
         SkillIO(
-            name="TrendResult",
+            name="trend_result",
             description="Trend direction and confidence score.",
             data_type="TrendResult",
             required=True,

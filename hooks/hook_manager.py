@@ -4,10 +4,11 @@ import importlib
 from pathlib import Path
 from typing import Any, Callable
 
-from .schemas import HookContext, SignalHookResult, TradeHookResult
+from .schemas import HookContext, SignalHookResult, TradeHookResult, CloseHookResult
 
 SignalHook = Callable[[HookContext], SignalHookResult]
 TradeHook = Callable[[HookContext], TradeHookResult]
+CloseHook = Callable[[HookContext], CloseHookResult]
 
 
 class HookManager:
@@ -17,6 +18,8 @@ class HookManager:
         self.after_signal_hooks: list[SignalHook] = []
         self.before_trade_hooks: list[TradeHook] = []
         self.after_trade_hooks: list[TradeHook] = []
+        self.before_close_hooks: list[CloseHook] = []
+        self.after_close_hooks: list[CloseHook] = []
         self._discover_hooks()
 
     def _discover_hooks(self) -> None:
@@ -24,6 +27,8 @@ class HookManager:
         self.after_signal_hooks = self._load_hooks(self.hooks_directory / "after_signal", "after_signal_hook")
         self.before_trade_hooks = self._load_hooks(self.hooks_directory / "before_trade", "before_trade_hook")
         self.after_trade_hooks = self._load_hooks(self.hooks_directory / "after_trade", "after_trade_hook")
+        self.before_close_hooks = self._load_hooks(self.hooks_directory / "before_close", "before_close_hook")
+        self.after_close_hooks = self._load_hooks(self.hooks_directory / "after_close", "after_close_hook")
 
     def run_before_signal(self, context: HookContext) -> list[SignalHookResult]:
         return [hook(context) for hook in self.before_signal_hooks]
@@ -37,6 +42,12 @@ class HookManager:
     def run_after_trade(self, context: HookContext) -> list[TradeHookResult]:
         return [hook(context) for hook in self.after_trade_hooks]
 
+    def run_before_close(self, context: HookContext) -> list[CloseHookResult]:
+        return [hook(context) for hook in self.before_close_hooks]
+
+    def run_after_close(self, context: HookContext) -> list[CloseHookResult]:
+        return [hook(context) for hook in self.after_close_hooks]
+
     def register_before_signal_hook(self, hook: SignalHook) -> None:
         self.before_signal_hooks.append(hook)
 
@@ -48,6 +59,12 @@ class HookManager:
 
     def register_after_trade_hook(self, hook: TradeHook) -> None:
         self.after_trade_hooks.append(hook)
+
+    def register_before_close_hook(self, hook: CloseHook) -> None:
+        self.before_close_hooks.append(hook)
+
+    def register_after_close_hook(self, hook: CloseHook) -> None:
+        self.after_close_hooks.append(hook)
 
     def _load_hooks(self, folder: Path, hook_name: str) -> list[Callable[[HookContext], Any]]:
         hooks: list[Callable[[HookContext], Any]] = []

@@ -49,6 +49,51 @@ def tick():
         risk.action = "PAUSE_EXECUTION"
         risk.reasons.append("independent data source validation failed")
 
+    if risk.action == "CLOSE_RISKY_ORDERS":
+        try:
+            close_context = HookContext(
+                event="before_close",
+                payload={"state": state.model_dump(), "tick": tick_data.model_dump(), "risk": risk.model_dump()},
+            )
+            before_close_results = evolution_agent.run_before_close(close_context)
+            if any(not result.proceed for result in before_close_results):
+                risk.action = "PAUSE_EXECUTION"
+                for result in before_close_results:
+                    if not result.proceed:
+                        risk.reasons.extend(result.reasons)
+                risk.reasons.append("close action blocked by before_close hook")
+                evolution_agent.save_evidence(
+                    {
+                        "event": "before_close_blocked",
+                        "state": state.model_dump(),
+                        "tick": tick_data.model_dump(),
+                        "risk": risk.model_dump(),
+                        "hook_results": [result.__dict__ for result in before_close_results],
+                    },
+                    tags=["evidence", "close", "hook"],
+                )
+            else:
+                for result in before_close_results:
+                    risk.reasons.extend(result.reasons)
+                evolution_agent.save_failure(
+                    {
+                        "event": "close_action",
+                        "state": state.model_dump(),
+                        "tick": tick_data.model_dump(),
+                        "risk": risk.model_dump(),
+                    },
+                    tags=["failure", "close", "risk"],
+                )
+                try:
+                    evolution_agent.run_after_close(HookContext(
+                        event="after_close",
+                        payload={"state": state.model_dump(), "tick": tick_data.model_dump(), "risk": risk.model_dump()},
+                    ))
+                except Exception:
+                    pass
+        except Exception:
+            pass
+
     cycle = state_store.load_cycle(state.current_cycle_id) if state.current_cycle_id else None
     grid = calculate_grid(state.symbol, tick_data.mid, tick_data.mid, settings.default_step_size, settings.default_x_level, settings.tick_size)
     executed = []

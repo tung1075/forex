@@ -24,6 +24,8 @@ def available_hooks():
         "after_signal": [h.__name__ for h in evolution_agent.after_signal_hooks],
         "before_trade": [h.__name__ for h in evolution_agent.before_trade_hooks],
         "after_trade": [h.__name__ for h in evolution_agent.after_trade_hooks],
+        "before_close": [h.__name__ for h in evolution_agent.before_close_hooks],
+        "after_close": [h.__name__ for h in evolution_agent.after_close_hooks],
     }
 
 
@@ -61,4 +63,18 @@ def run_before_trade(req: HookRequest):
 def run_after_trade(req: HookRequest):
     ctx = HookContext(event=req.event, payload=req.payload, metadata=req.metadata)
     results = evolution_agent.run_after_trade(ctx)
+    return {"results": [r.__dict__ for r in results]}
+
+
+@router.post("/run-before-close")
+def run_before_close(req: HookRequest):
+    ctx = HookContext(event=req.event, payload=req.payload, metadata=req.metadata)
+    results = evolution_agent.run_before_close(ctx)
+    return {"results": [r.__dict__ for r in results]}
+
+
+@router.post("/run-after-close")
+def run_after_close(req: HookRequest):
+    ctx = HookContext(event=req.event, payload=req.payload, metadata=req.metadata)
+    results = evolution_agent.run_after_close(ctx)
     return {"results": [r.__dict__ for r in results]}
